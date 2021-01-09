@@ -26,6 +26,32 @@ export const getTechs = () => async (dispach) => {
   }
 };
 
+//add technitian to server
+export const addTech = (tech) => async (dispach) => {
+  try {
+    setLoading();
+
+    const res = await fetch('/techs', {
+      method: 'POST',
+      body: JSON.stringify(tech),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    const data = await res.json();
+
+    dispach({
+      type: ADD_TECH,
+      payload: data,
+    });
+  } catch (err) {
+    dispach({
+      type: TECHS_ERROR,
+      payload: err.response.statusText,
+    });
+  }
+};
+
 //set loading to true
 export const setLoading = () => {
   return {
